@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="一道pwn题引出的问题在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。 题目如下： 12345678910111213141516171819202122232425262728293031#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt;unsigned lon">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/04/25/一道pwn题引出的问题/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一道pwn题引出的问题在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。 题目如下： 12345678910111213141516171819202122232425262728293031#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt;unsigned lon">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-25T09:28:19.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="一道pwn题引出的问题在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。 题目如下： 12345678910111213141516171819202122232425262728293031#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt;unsigned lon">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,124 +154,159 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-一道pwn题引出的问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一道pwn题引出的问题"><a href="#一道pwn题引出的问题" class="headerlink" title="一道pwn题引出的问题"></a>一道pwn题引出的问题</h2><p>在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。</p>
+<p>题目如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"usage : %s [passcode]\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"passcode length should be 20 bytes\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"wrong passcode.\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题一：题目要输入20bytes，多少是20bytes？"><a href="#问题一：题目要输入20bytes，多少是20bytes？" class="headerlink" title="问题一：题目要输入20bytes，多少是20bytes？"></a>问题一：题目要输入20bytes，多少是20bytes？</h3><p>一个字符有两个属性，值和长度（或者叫占用空间大小）不管怎么表示，字符的最小单位为bit（比特位/位），常用单位为byte（字节），统一认为都用十六进制表示，0x0是一个一位的十六进制数，长度为4bit，0.5byte，所以常见两个二进制位为一组，正好长度是1byte，返回来看题目要求输入长度为20bytes，也就是20个两位十六进制数。</p>
+<h3 id="问题二：ip-i-是怎么把这20bytes分开的？"><a href="#问题二：ip-i-是怎么把这20bytes分开的？" class="headerlink" title="问题二：ip[i]是怎么把这20bytes分开的？"></a>问题二：ip[i]是怎么把这20bytes分开的？</h3><p>题目中我们输入了20bytes，然后做处理结果等于0x21DD09EC就获得flag，这个值只有4bytes。</p>
+<p>可以直接看到在处理时使用的是ip[1]，ip是指针，这就设计到程序的数据类型，题中的ip为int型指针，而c语言中int型为4bytes，即每次会处理从指针起的4bytes长度，我们输入了20bytes，每次处理4bytes，正好循环5次全部处理完。</p>
+<p>处理过程为简单的累加，也就是说我们要输入的20个bytes，4bytes一组分为5组相加值为0x21DD09EC，最简单的是4组0x00，和一组0x21DD09EC，但是0x00在c中是NULL，不能用，选用其他就可以。</p>
+<h3 id="问题三：按照思路输入之后，并没有返回flag"><a href="#问题三：按照思路输入之后，并没有返回flag" class="headerlink" title="问题三：按照思路输入之后，并没有返回flag"></a>问题三：按照思路输入之后，并没有返回flag</h3><p>当计算完毕输入的时候发现返回错误</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">col@ubuntu:~$ ./col `python -c <span class="string">"print '\x01\x01\x01\x01'*4+'\x1d\xd9\x05\xe8'"</span>`</span><br><span class="line">wrong passcode.</span><br></pre></td></tr></table></figure>
+<p>看了别人的答案发现这里还有大小端序的问题，计算机用的都是小端序。</p>
+<p>端序，是字节在内存中存储顺序，小端序的情况下，数据的低位存在内存的低地址，高位存在内存的高地址，但操作系统在读取内存时，是从内存的低地址开始读的。</p>
+<p>这样的话会出现什么问题呢？我们输入的20位十六进制存储在了内存（栈）中，为小端序。<br>我对这个程序的check_password函数做了一个小修改</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"*ip addr [%p]\n"</span>,ip);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"*ip value [%d]\n"</span>,*ip);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"*ip[4] value [%d]\n"</span>,ip[<span class="number">4</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                        res += ip[i];</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在运算前打印出指针地址，地址指向的第一个值和第五个值，然后运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yps@YPS-Rev  ~  ./testmnm `python -c <span class="string">"print '\x01\x01\x01\x01'*4+'\x02\x03\x04\x05'"</span>`</span><br><span class="line">*ip addr [0x7ffc551bc712]</span><br><span class="line">*ip value [16843009]   <span class="comment"># 十进制，转换后为0x01010101</span></span><br><span class="line">*ip[4] value [84148994]  <span class="comment"># 十进制，转换后为0x50403020</span></span><br><span class="line">wrong passcode.</span><br></pre></td></tr></table></figure></p>
+<p>可以看出我们输入的是0x02030405，但内存中的顺序为0x05040302，程序相加直接使用的就是内存里面的值，这就导致这个题我们需要用小端序输入才能获得正确结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> yps@YPS-Rev  ~  ./testmnm `python -c <span class="string">"print '\x01\x01\x01\x01'*4+'\xe8\x05\xd9\x1d'"</span>` </span><br><span class="line">*ip addr [0x7ffc2869e712]</span><br><span class="line">*ip value [16843009]</span><br><span class="line">*ip[4] value [500762088]   <span class="comment"># 0x1DD905E8 </span></span><br><span class="line">/bin/cat: flag: No such file or directory <span class="comment">#本地测试没有放flag文件</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>做到这里我突然回想，为什么平常我们在编程的时候几乎不会遇到这个问题，仔细想了一下应该是因为在正常编程的时候，一般不会直接对内存的值进行读写比较操作，不论是调用系统的函数，还是赋值到变量，这样系统在输入和输出之前已经将这些处理好，所以不会产生这个问题。一旦涉及到使用指针直接操作内存，就要把这些点都考虑到，不然无法得到预期结果。</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/25/一道pwn题引出的问题/" class="archive-article-date">
-  	<time datetime="2019-04-25T09:30:51.003Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-25</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/04/25/一道pwn题引出的问题/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/first/" class="archive-article-date">
-  	<time datetime="2019-03-26T06:16:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/26/first/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">first</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/first/">first</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/21/Test/" class="archive-article-date">
-  	<time datetime="2019-03-21T08:47:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/21/Test/">Test</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/21/hello-world/" class="archive-article-date">
-  	<time datetime="2019-03-21T08:34:33.550Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/21/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -290,8 +329,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
