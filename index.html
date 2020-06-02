@@ -160,12 +160,12 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/ckaxomcwl0002j8vt20mrkbsp">pwn基础知识巩固</a>
+      <a class="article-title" href="/2019/ckaxot0md0002tovtb70l9603.html">pwn基础知识巩固</a>
     </h1>
   
 
         
-        <a href="/2019/ckaxomcwl0002j8vt20mrkbsp" class="archive-article-date">
+        <a href="/2019/ckaxot0md0002tovtb70l9603.html" class="archive-article-date">
   	<time datetime="2019-04-26T01:56:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-26</time>
 </a>
         
@@ -178,7 +178,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"usage : %s [passcode]\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"passcode length should be 20 bytes\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"wrong passcode.\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="问题一：题目要输入20bytes，多少是20bytes？"><a href="#问题一：题目要输入20bytes，多少是20bytes？" class="headerlink" title="问题一：题目要输入20bytes，多少是20bytes？"></a>问题一：题目要输入20bytes，多少是20bytes？</h3><p>一个字符有两个属性，值和长度（或者叫占用空间大小）不管怎么表示，字符的最小单位为bit（比特位/位），常用单位为byte（字节），统一认为都用十六进制表示，0x0是一个一位的十六进制数，长度为4bit，0.5byte，所以常见两个二进制位为一组，正好长度是1byte，返回来看题目要求输入长度为20bytes，也就是20个两位十六进制数。</p>
         
-          <a class="article-more-a" href="/2019/ckaxomcwl0002j8vt20mrkbsp#more">more >></a>
+          <a class="article-more-a" href="/2019/ckaxot0md0002tovtb70l9603.html#more">more >></a>
         
       
 
@@ -213,7 +213,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/ckaxomcwl0002j8vt20mrkbsp">展开全文 >></a>
+          <a class="article-more-a" href="/2019/ckaxot0md0002tovtb70l9603.html">展开全文 >></a>
         </p>
       
 
@@ -250,12 +250,12 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/ckaxomcvl0001j8vt43v0senq">Hello World</a>
+      <a class="article-title" href="/2019/ckaxot0lz0001tovtciznbsww.html">Hello World</a>
     </h1>
   
 
         
-        <a href="/2019/ckaxomcvl0001j8vt43v0senq" class="archive-article-date">
+        <a href="/2019/ckaxot0lz0001tovtciznbsww.html" class="archive-article-date">
   	<time datetime="2019-03-21T08:34:33.550Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
 </a>
         
@@ -284,7 +284,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/ckaxomcvl0001j8vt43v0senq">展开全文 >></a>
+          <a class="article-more-a" href="/2019/ckaxot0lz0001tovtciznbsww.html">展开全文 >></a>
         </p>
       
 
