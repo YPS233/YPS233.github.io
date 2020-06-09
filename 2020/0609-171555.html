@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yps233.github.io">
-  <title>Category: pwn | Cat Knowledge | ChanGeZ | Everone</title>
+  <title>内存分类与寻址 | Cat Knowledge | ChanGeZ | Everone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="杂七杂八的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Cat Knowledge | ChanGeZ | Everone">
-<meta property="og:url" content="https://yps233.github.io/categories/pwn/index.html">
+  <meta name="description" content="系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
+<meta name="keywords" content="memery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存分类与寻址">
+<meta property="og:url" content="https://yps233.github.io/2020/0609-171555.html">
 <meta property="og:site_name" content="Cat Knowledge | ChanGeZ | Everone">
-<meta property="og:description" content="杂七杂八的博客">
+<meta property="og:description" content="系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://yps233.github.io/2020/0609-171555/1591690042588.png">
+<meta property="og:image" content="https://yps233.github.io/2020/0609-171555/1591690108370.png">
+<meta property="og:updated_time" content="2020-06-09T09:26:11.906Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cat Knowledge | ChanGeZ | Everone">
-<meta name="twitter:description" content="杂七杂八的博客">
+<meta name="twitter:title" content="内存分类与寻址">
+<meta name="twitter:description" content="系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
+<meta name="twitter:image" content="https://yps233.github.io/2020/0609-171555/1591690042588.png">
   
     <link rel="alternative" href="/atom.xml" title="Cat Knowledge | ChanGeZ | Everone" type="application/atom+xml">
   
@@ -151,71 +156,193 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-内存分类与寻址" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/0426-095605.html" class="archive-article-date">
-  	<time datetime="2019-04-26T01:56:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/0426-095605.html">pwn基础知识巩固</a>
+    <h1 class="article-title" itemprop="name">
+      内存分类与寻址
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/0609-171555.html" class="archive-article-date">
+  	<time datetime="2020-06-09T09:15:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="系统内存分配"><a href="#系统内存分配" class="headerlink" title="系统内存分配"></a>系统内存分配</h2><p>x86下最大支持2^32=4GB的虚拟地址空间<br>x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。</p>
+<p>操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。</p>
+<a id="more"></a>
+<img src="/2020/0609-171555/1591690042588.png" title="内存空间">`<br><br>进程空间结构如下，每个进程独占内存空间<br><br><img src="/2020/0609-171555/1591690108370.png">
+<p>分成四个区，栈、堆、代码、数据</p>
+<p>栈的大小是多少？<br>Windows<br>应用栈默认1M，编译指令/stack可以改设其他值<br>内核栈根据CPU架构，x86是12KB，x64是24KB<br>内核中栈空间很小，所以禁止使用递归算法。很容易超过栈限制，溢出覆盖其他空间</p>
+<p>Linux<br>内核栈：4K或者8K，可以配置内核源代码中指定<br>应用栈：10M，通过命令ulimit -s查看和设置</p>
+<p>内存中进程空间中存放的内容就是PE或者ELF文件加载过去的内容，内容都来自于二进制文件。<br>.text里面是存放代码<br>.rdata 只读数据段，存放常量，字符常量，const常量<br>.data 存储<strong>初始化好</strong>的全局变量和静态变量<br>.bss  存放<strong>未初始化</strong>的全局变量和静态变量</p>
+<p>后面三个都是存放的数据，除了.bss段，另外两个的值在编译的时候就确定了，并且将其编译进了可执行文件。通过反汇编都能找到。<br>而.bss段是在代码运行的时候手动编写汇编代码将未初始化的变量都初始化为0，所以未初始化的全局变量和静态变量默认值都是0。</p>
+<h1 id="地址分类和寻址模式"><a href="#地址分类和寻址模式" class="headerlink" title="地址分类和寻址模式"></a>地址分类和寻址模式</h1><h3 id="逻辑地址，线性地址，物理地址"><a href="#逻辑地址，线性地址，物理地址" class="headerlink" title="逻辑地址，线性地址，物理地址"></a>逻辑地址，线性地址，物理地址</h3><p>逻辑地址是编译器生成的，使用C语言指针时，指针的值就是逻辑地址。对于每个进程而言，都有相同的进程地址空间，类似的逻辑地址甚至可能相同。逻辑地址由段地址+段内便宜组成。</p>
+<p>线性地址，是由逻辑地址转化来的，逻辑地址经过分段机制，转化为线性地址。如果没有分页机制，逻辑地址=线性地址</p>
+<p>物理地址：CPU在存取数据时，在地址总线上发出的电平信号。要得到物理地址，必须把逻辑地址经过分段，分页转化。这个过程就叫做内存寻址。</p>
+<h3 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h3><p>x86下主要两种</p>
+<ol>
+<li>实模式分段模型</li>
+<li>保护模式扁平模型</li>
+</ol>
+<h4 id="分段模型（16位系统）"><a href="#分段模型（16位系统）" class="headerlink" title="分段模型（16位系统）"></a>分段模型（16位系统）</h4><p>来源于早期的16位操作系统，但CPU有20位的地址总线，寻址空间为2^20=1M，但是16位的寄存器只能存放16位的内容，也就是只能表示到2^16=64K，需要分段才能完成2^20寻址空间。</p>
+<p> 把2^20=1M的寻址空间分成<strong>16段</strong>，每一段是2^16=64K。也就是一个寄存处能表示的地址，在用另一个寄存器表示段的起始地址，就完成了2^20空间的寻址。</p>
+<p> 段地址就是某一个段的起始地址，段内偏移就是低16位。注意，这个时候段的起始地址依旧是20位的，寄存器还是存不下，但是因为分段的机制，低4位必然都是0，所以省略掉，只写高16位。那么地址就是：段地址左移4位（低位补0）+段内偏移</p>
+<p> 举个例子： 0x3000 是第四个段的起始地址，偏移地址是0x1234，那么实际寻址地址是0x31234共20位。</p>
+<h4 id="扁平模型"><a href="#扁平模型" class="headerlink" title="扁平模型"></a>扁平模型</h4><p>在32位操作系统中，不再需要两个寄存器和基地址来保存地址，寄存器和指令都可以寻址整个线性地址空间。基址设置为一个统一的值。 CS和DS都是一个固定值，不在需要这两个段寄存器</p>
+<h4 id="实模式分段模型的寻址方式"><a href="#实模式分段模型的寻址方式" class="headerlink" title="实模式分段模型的寻址方式"></a>实模式分段模型的寻址方式</h4><p>对应分段模型。实模式运行20位地址总线，寻址空间1M，寄存器16位，通过CS&lt;&lt;4+IP进行代码寻址，DS&lt;&lt;4+off进行数据寻址</p>
+<h4 id="保护模式扁平模式的寻址方式"><a href="#保护模式扁平模式的寻址方式" class="headerlink" title="保护模式扁平模式的寻址方式"></a>保护模式扁平模式的寻址方式</h4><p>对应扁平模式。保护模式启用了32位地址总线，地址使用的是虚拟地址，引入了页表和段描述符表：GDT和LDT段描述符表来定义每个段，通过页表进行寻址。</p>
+<p>正常来说这种模式寻址是非常简单的事情，一个寄存器保存地址就可以了。但是因为要对内存尽心保护，特意复杂化了这个过程，且intel又兼容了以前的分段机制，所以显得更加复杂。</p>
+<p>目前win7以上都是使用保护模式扁平模型。</p>
+<ol>
+<li>实模式分段模型寻址<br> 逻辑地址-&gt;物理地址 ：逻辑地址 从段内地址左移4位+段内偏移就是物理地址</li>
+<li>保护模式扁平模型<br> 逻辑地址-&gt;物理地址 ：页表</li>
+</ol>
+<h2 id="保护模式虚拟地址到物理地址寻址"><a href="#保护模式虚拟地址到物理地址寻址" class="headerlink" title="保护模式虚拟地址到物理地址寻址"></a>保护模式虚拟地址到物理地址寻址</h2><p>在保护模式中，段地址是一个固定值，所以可以认为逻辑地址=线性地址。</p>
+<h3 id="x86-二级寻址-段-两级页表"><a href="#x86-二级寻址-段-两级页表" class="headerlink" title="x86 二级寻址 段+两级页表"></a>x86 二级寻址 段+两级页表</h3><p>程序知道的是逻辑地址</p>
+<p>逻辑地址=段选择符+偏移量  </p>
+<p>段选择符+偏移量+G/LDTR表  = 32位线性地址</p>
+<p>32位线性地址 = 页目录项+页表项+页内偏移地址</p>
+<p>页目录项+页表项+页内偏移地址+CR3 = 物理地址</p>
+<h3 id="x64四级寻址-四级页表"><a href="#x64四级寻址-四级页表" class="headerlink" title="x64四级寻址 四级页表"></a>x64四级寻址 四级页表</h3><p>原理类似上面，实际是只有4级页表，也就是上面的页表查4次得到物理地址</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">pwn 计算机基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">memery</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/pwn//" class="article-tag-list-link color4">pwn</a>
+        			<a href="/categories/system//" class="article-tag-list-link color2">system</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yps233.github.io/2020/0609-171555.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/0609-171644.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C 指针</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -238,10 +365,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

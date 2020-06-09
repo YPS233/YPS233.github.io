@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://yps233.github.io">
   <title>C 指针 | Cat Knowledge | ChanGeZ | Everone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x00 指针定义，取地址，解引用（取值）指针也是变量的一种和int,char一样，值是一个内存地址 指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。 有一个特殊的vord *类型，说明可以为任意类型的指针 在windows平台，void">
+  <meta name="description" content="指针一直是C/C++进阶的一个难点，把指针相关内容都记录在这里。">
 <meta name="keywords" content="C语言">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C 指针">
 <meta property="og:url" content="https://yps233.github.io/2020/0609-171644.html">
 <meta property="og:site_name" content="Cat Knowledge | ChanGeZ | Everone">
-<meta property="og:description" content="0x00 指针定义，取地址，解引用（取值）指针也是变量的一种和int,char一样，值是一个内存地址 指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。 有一个特殊的vord *类型，说明可以为任意类型的指针 在windows平台，void">
+<meta property="og:description" content="指针一直是C/C++进阶的一个难点，把指针相关内容都记录在这里。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-06-09T08:19:37.290Z">
+<meta property="og:updated_time" content="2020-06-09T09:28:30.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C 指针">
-<meta name="twitter:description" content="0x00 指针定义，取地址，解引用（取值）指针也是变量的一种和int,char一样，值是一个内存地址 指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。 有一个特殊的vord *类型，说明可以为任意类型的指针 在windows平台，void">
+<meta name="twitter:description" content="指针一直是C/C++进阶的一个难点，把指针相关内容都记录在这里。">
   
     <link rel="alternative" href="/atom.xml" title="Cat Knowledge | ChanGeZ | Everone" type="application/atom+xml">
   
@@ -173,11 +173,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="0x00-指针定义，取地址，解引用（取值）"><a href="#0x00-指针定义，取地址，解引用（取值）" class="headerlink" title="0x00 指针定义，取地址，解引用（取值）"></a>0x00 指针定义，取地址，解引用（取值）</h1><p>指针也是变量的一种和int,char一样，值是一个内存地址</p>
+        <p>指针一直是C/C++进阶的一个难点，把指针相关内容都记录在这里。</p>
+<a id="more"></a>
+<h1 id="0x00-指针定义，取地址，解引用（取值）"><a href="#0x00-指针定义，取地址，解引用（取值）" class="headerlink" title="0x00 指针定义，取地址，解引用（取值）"></a>0x00 指针定义，取地址，解引用（取值）</h1><p>指针也是变量的一种和int,char一样，值是一个内存地址</p>
 <p>指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。</p>
 <p>有一个特殊的vord *类型，说明可以为任意类型的指针</p>
 <p>在windows平台，void <em> 表示可以接受任何类型的指针，不能\</em>p来取值，需要先转成特定类型再取值。<br>linux平台的gcc默认<code>void*</code>等同于<code>char*</code></p>
-<a id="more"></a>
 <p><code>void*</code>转化为其他指针需要强转，返过来其他指针转<code>void*</code>可以直接传</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void*  xx</span><br><span class="line">int *p = (int*)pv1</span><br></pre></td></tr></table></figure>
 <p>常见指针类型转换的例子 </p>
@@ -339,6 +340,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/0609-171555.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          内存分类与寻址
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/1030-175116.html" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Some C Code that I was write</div>
@@ -467,11 +477,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C语言</a>
+                <a href="javascript:void(0)" class="js-tag color2">memery</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">pwn 计算机基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C语言</a>
               </li>
             
             <div class="clearfix"></div>
