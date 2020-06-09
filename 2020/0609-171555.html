@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="https://yps233.github.io">
   <title>内存分类与寻址 | Cat Knowledge | ChanGeZ | Everone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
+  <meta name="description" content="0x01 系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
 <meta name="keywords" content="memery">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存分类与寻址">
 <meta property="og:url" content="https://yps233.github.io/2020/0609-171555.html">
 <meta property="og:site_name" content="Cat Knowledge | ChanGeZ | Everone">
-<meta property="og:description" content="系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
+<meta property="og:description" content="0x01 系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://yps233.github.io/2020/0609-171555/1591690042588.png">
 <meta property="og:image" content="https://yps233.github.io/2020/0609-171555/1591690108370.png">
-<meta property="og:updated_time" content="2020-06-09T09:26:11.906Z">
+<meta property="og:updated_time" content="2020-06-09T10:01:51.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存分类与寻址">
-<meta name="twitter:description" content="系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
+<meta name="twitter:description" content="0x01 系统内存分配x86下最大支持2^32=4GB的虚拟地址空间x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。 操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。">
 <meta name="twitter:image" content="https://yps233.github.io/2020/0609-171555/1591690042588.png">
   
     <link rel="alternative" href="/atom.xml" title="Cat Knowledge | ChanGeZ | Everone" type="application/atom+xml">
@@ -176,7 +176,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="系统内存分配"><a href="#系统内存分配" class="headerlink" title="系统内存分配"></a>系统内存分配</h2><p>x86下最大支持2^32=4GB的虚拟地址空间<br>x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。</p>
+        <h2 id="0x01-系统内存分配"><a href="#0x01-系统内存分配" class="headerlink" title="0x01 系统内存分配"></a>0x01 系统内存分配</h2><p>x86下最大支持2^32=4GB的虚拟地址空间<br>x64理论最大支持2^64寻址空间，但是太大了，windows常用44位最大寻址空间16TB，linux常用48位最大寻址空间256TB。</p>
 <p>操作系统把可寻址的内存空间一份为二，上半部分是高地址，作为内核空间。下半部分低地址，作为进程空间，如图。</p>
 <a id="more"></a>
 <img src="/2020/0609-171555/1591690042588.png" title="内存空间">`<br><br>进程空间结构如下，每个进程独占内存空间<br><br><img src="/2020/0609-171555/1591690108370.png">
@@ -185,7 +185,7 @@
 <p>Linux<br>内核栈：4K或者8K，可以配置内核源代码中指定<br>应用栈：10M，通过命令ulimit -s查看和设置</p>
 <p>内存中进程空间中存放的内容就是PE或者ELF文件加载过去的内容，内容都来自于二进制文件。<br>.text里面是存放代码<br>.rdata 只读数据段，存放常量，字符常量，const常量<br>.data 存储<strong>初始化好</strong>的全局变量和静态变量<br>.bss  存放<strong>未初始化</strong>的全局变量和静态变量</p>
 <p>后面三个都是存放的数据，除了.bss段，另外两个的值在编译的时候就确定了，并且将其编译进了可执行文件。通过反汇编都能找到。<br>而.bss段是在代码运行的时候手动编写汇编代码将未初始化的变量都初始化为0，所以未初始化的全局变量和静态变量默认值都是0。</p>
-<h1 id="地址分类和寻址模式"><a href="#地址分类和寻址模式" class="headerlink" title="地址分类和寻址模式"></a>地址分类和寻址模式</h1><h3 id="逻辑地址，线性地址，物理地址"><a href="#逻辑地址，线性地址，物理地址" class="headerlink" title="逻辑地址，线性地址，物理地址"></a>逻辑地址，线性地址，物理地址</h3><p>逻辑地址是编译器生成的，使用C语言指针时，指针的值就是逻辑地址。对于每个进程而言，都有相同的进程地址空间，类似的逻辑地址甚至可能相同。逻辑地址由段地址+段内便宜组成。</p>
+<h2 id="地址分类和寻址模式"><a href="#地址分类和寻址模式" class="headerlink" title="地址分类和寻址模式"></a>地址分类和寻址模式</h2><h3 id="逻辑地址，线性地址，物理地址"><a href="#逻辑地址，线性地址，物理地址" class="headerlink" title="逻辑地址，线性地址，物理地址"></a>逻辑地址，线性地址，物理地址</h3><p>逻辑地址是编译器生成的，使用C语言指针时，指针的值就是逻辑地址。对于每个进程而言，都有相同的进程地址空间，类似的逻辑地址甚至可能相同。逻辑地址由段地址+段内便宜组成。</p>
 <p>线性地址，是由逻辑地址转化来的，逻辑地址经过分段机制，转化为线性地址。如果没有分页机制，逻辑地址=线性地址</p>
 <p>物理地址：CPU在存取数据时，在地址总线上发出的电平信号。要得到物理地址，必须把逻辑地址经过分段，分页转化。这个过程就叫做内存寻址。</p>
 <h3 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h3><p>x86下主要两种</p>
@@ -213,6 +213,16 @@
 <p>32位线性地址 = 页目录项+页表项+页内偏移地址</p>
 <p>页目录项+页表项+页内偏移地址+CR3 = 物理地址</p>
 <h3 id="x64四级寻址-四级页表"><a href="#x64四级寻址-四级页表" class="headerlink" title="x64四级寻址 四级页表"></a>x64四级寻址 四级页表</h3><p>原理类似上面，实际是只有4级页表，也就是上面的页表查4次得到物理地址</p>
+<h2 id="C语言使用各种内存"><a href="#C语言使用各种内存" class="headerlink" title="C语言使用各种内存"></a>C语言使用各种内存</h2><h3 id="0x00-静态区内存"><a href="#0x00-静态区内存" class="headerlink" title="0x00 静态区内存"></a>0x00 静态区内存</h3><p>静态区存放全局变量，定义全局变量就可以直接放入</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> g_iNum = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">char</span> g_Aarray = <span class="string">"hello world"</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="0x01-栈上内存"><a href="#0x01-栈上内存" class="headerlink" title="0x01 栈上内存"></a>0x01 栈上内存</h3><p>栈上存放的是局部变量，在main函数或任意函数内定义局部变量就保存在栈上</p>
+<p>在逆向画栈结构图时，每一格存多大的内容，是按照操作系统位数也就是一个寄存器宽度来表，32位就是4字节，64位就是8字节</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">123</span>;	<span class="comment">//4字节 </span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">124</span>;	<span class="comment">//4字节</span></span><br><span class="line">	<span class="keyword">char</span>[] buf[<span class="number">128</span>] = &#123;o&#125;;	<span class="comment">//128字节</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="0x02-堆上内存"><a href="#0x02-堆上内存" class="headerlink" title="0x02 堆上内存"></a>0x02 堆上内存</h3><p>堆需要用到申请函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *p = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">256</span>);</span><br><span class="line"><span class="keyword">if</span>(p==<span class="literal">NULL</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">memset</span>(p,<span class="number">0</span>,<span class="number">256</span>); <span class="comment">//初始化为0</span></span><br><span class="line">strcpy_s(p,<span class="number">256</span>,<span class="string">"hello world"</span>);</span><br><span class="line"><span class="built_in">free</span>(p);</span><br><span class="line">p = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="0x03-如何编译一个10M的程序？"><a href="#0x03-如何编译一个10M的程序？" class="headerlink" title="0x03 如何编译一个10M的程序？"></a>0x03 如何编译一个10M的程序？</h3><p>在全局变量中，写一个很大的数据，编译程序就会很大</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> g_Data[<span class="number">10</span>*<span class="number">1024</span>*<span class="number">1024</span>]=&#123;<span class="string">"hello world"</span>&#125;; <span class="comment">//注意值不能全为0</span></span><br></pre></td></tr></table></figure>
+<p>这个程序编译出来就会大于10M。</p>
 
       
 
