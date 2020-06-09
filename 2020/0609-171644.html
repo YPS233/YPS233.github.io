@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yps233.github.io">
-  <title>pwn基础知识巩固 | Cat Knowledge | ChanGeZ | Everone</title>
+  <title>C 指针 | Cat Knowledge | ChanGeZ | Everone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一道pwn题引出的问题在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。">
-<meta name="keywords" content="pwn 计算机基础">
+  <meta name="description" content="0x00 指针定义，取地址，解引用（取值）指针也是变量的一种和int,char一样，值是一个内存地址 指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。 有一个特殊的vord *类型，说明可以为任意类型的指针 在windows平台，void">
+<meta name="keywords" content="C语言">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwn基础知识巩固">
-<meta property="og:url" content="https://yps233.github.io/2019/0426-095605.html">
+<meta property="og:title" content="C 指针">
+<meta property="og:url" content="https://yps233.github.io/2020/0609-171644.html">
 <meta property="og:site_name" content="Cat Knowledge | ChanGeZ | Everone">
-<meta property="og:description" content="一道pwn题引出的问题在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。">
+<meta property="og:description" content="0x00 指针定义，取地址，解引用（取值）指针也是变量的一种和int,char一样，值是一个内存地址 指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。 有一个特殊的vord *类型，说明可以为任意类型的指针 在windows平台，void">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-06-02T09:30:33.056Z">
+<meta property="og:updated_time" content="2020-06-09T08:19:37.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pwn基础知识巩固">
-<meta name="twitter:description" content="一道pwn题引出的问题在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。">
+<meta name="twitter:title" content="C 指针">
+<meta name="twitter:description" content="0x00 指针定义，取地址，解引用（取值）指针也是变量的一种和int,char一样，值是一个内存地址 指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。 有一个特殊的vord *类型，说明可以为任意类型的指针 在windows平台，void">
   
     <link rel="alternative" href="/atom.xml" title="Cat Knowledge | ChanGeZ | Everone" type="application/atom+xml">
   
@@ -153,46 +153,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-pwn基础知识巩固" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-C-指针" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      pwn基础知识巩固
+      C 指针
     </h1>
   
 
         
-        <a href="/2019/0426-095605.html" class="archive-article-date">
-  	<time datetime="2019-04-26T01:56:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-26</time>
+        <a href="/2020/0609-171644.html" class="archive-article-date">
+  	<time datetime="2020-06-09T08:17:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一道pwn题引出的问题"><a href="#一道pwn题引出的问题" class="headerlink" title="一道pwn题引出的问题"></a>一道pwn题引出的问题</h2><p>在做pwnable的题目时，做到第二题，发现了许多自己以前没有注意到的细节问题，都挺关键的，但之前一直没搞懂，仔细学习一下，做一个笔记。</p>
+        <h1 id="0x00-指针定义，取地址，解引用（取值）"><a href="#0x00-指针定义，取地址，解引用（取值）" class="headerlink" title="0x00 指针定义，取地址，解引用（取值）"></a>0x00 指针定义，取地址，解引用（取值）</h1><p>指针也是变量的一种和int,char一样，值是一个内存地址</p>
+<p>指针分不同的类型，整型指针，字符指针等等，每一个数据类型都有对应的指针类型，这些指针类型的区别在于指向内存的宽度。比如int类型在32位下占4个字节，所以int类型的指针在取值时就会知道要取4个字节长度的内容。</p>
+<p>有一个特殊的vord *类型，说明可以为任意类型的指针</p>
+<p>在windows平台，void <em> 表示可以接受任何类型的指针，不能\</em>p来取值，需要先转成特定类型再取值。<br>linux平台的gcc默认<code>void*</code>等同于<code>char*</code></p>
 <a id="more"></a>
-<p>题目如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"usage : %s [passcode]\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"passcode length should be 20 bytes\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"wrong passcode.\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="问题一：题目要输入20bytes，多少是20bytes？"><a href="#问题一：题目要输入20bytes，多少是20bytes？" class="headerlink" title="问题一：题目要输入20bytes，多少是20bytes？"></a>问题一：题目要输入20bytes，多少是20bytes？</h3><p>一个字符有两个属性，值和长度（或者叫占用空间大小）不管怎么表示，字符的最小单位为bit（比特位/位），常用单位为byte（字节），统一认为都用十六进制表示，0x0是一个一位的十六进制数，长度为4bit，0.5byte，所以常见两个二进制位为一组，正好长度是1byte，返回来看题目要求输入长度为20bytes，也就是20个两位十六进制数。</p>
-<h3 id="问题二：ip-i-是怎么把这20bytes分开的？"><a href="#问题二：ip-i-是怎么把这20bytes分开的？" class="headerlink" title="问题二：ip[i]是怎么把这20bytes分开的？"></a>问题二：ip[i]是怎么把这20bytes分开的？</h3><p>题目中我们输入了20bytes，然后做处理结果等于0x21DD09EC就获得flag，这个值只有4bytes。</p>
-<p>可以直接看到在处理时使用的是ip[1]，ip是指针，这就设计到程序的数据类型，题中的ip为int型指针，而c语言中int型为4bytes，即每次会处理从指针起的4bytes长度，我们输入了20bytes，每次处理4bytes，正好循环5次全部处理完。</p>
-<p>处理过程为简单的累加，也就是说我们要输入的20个bytes，4bytes一组分为5组相加值为0x21DD09EC，最简单的是4组0x00，和一组0x21DD09EC，但是0x00在c中是NULL，不能用，选用其他就可以。</p>
-<h3 id="问题三：按照思路输入之后，并没有返回flag"><a href="#问题三：按照思路输入之后，并没有返回flag" class="headerlink" title="问题三：按照思路输入之后，并没有返回flag"></a>问题三：按照思路输入之后，并没有返回flag</h3><p>当计算完毕输入的时候发现返回错误</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">col@ubuntu:~$ ./col `python -c <span class="string">"print '\x01\x01\x01\x01'*4+'\x1d\xd9\x05\xe8'"</span>`</span><br><span class="line">wrong passcode.</span><br></pre></td></tr></table></figure>
-<p>看了别人的答案发现这里还有大小端序的问题，计算机用的都是小端序。</p>
-<p>端序，是字节在内存中存储顺序，小端序的情况下，数据的低位存在内存的低地址，高位存在内存的高地址，但操作系统在读取内存时，是从内存的低地址开始读的。</p>
-<p>这样的话会出现什么问题呢？我们输入的20位十六进制存储在了内存（栈）中，为小端序。<br>我对这个程序的check_password函数做了一个小修改</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">check_password</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>* ip = (<span class="keyword">int</span>*)p;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"*ip addr [%p]\n"</span>,ip);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"*ip value [%d]\n"</span>,*ip);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"*ip[4] value [%d]\n"</span>,ip[<span class="number">4</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                        res += ip[i];</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在运算前打印出指针地址，地址指向的第一个值和第五个值，然后运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yps@YPS-Rev  ~  ./testmnm `python -c <span class="string">"print '\x01\x01\x01\x01'*4+'\x02\x03\x04\x05'"</span>`</span><br><span class="line">*ip addr [0x7ffc551bc712]</span><br><span class="line">*ip value [16843009]   <span class="comment"># 十进制，转换后为0x01010101</span></span><br><span class="line">*ip[4] value [84148994]  <span class="comment"># 十进制，转换后为0x50403020</span></span><br><span class="line">wrong passcode.</span><br></pre></td></tr></table></figure></p>
-<p>可以看出我们输入的是0x02030405，但内存中的顺序为0x05040302，程序相加直接使用的就是内存里面的值，这就导致这个题我们需要用小端序输入才能获得正确结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> yps@YPS-Rev  ~  ./testmnm `python -c <span class="string">"print '\x01\x01\x01\x01'*4+'\xe8\x05\xd9\x1d'"</span>` </span><br><span class="line">*ip addr [0x7ffc2869e712]</span><br><span class="line">*ip value [16843009]</span><br><span class="line">*ip[4] value [500762088]   <span class="comment"># 0x1DD905E8 </span></span><br><span class="line">/bin/cat: flag: No such file or directory <span class="comment">#本地测试没有放flag文件</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>做到这里我突然回想，为什么平常我们在编程的时候几乎不会遇到这个问题，仔细想了一下应该是因为在正常编程的时候，一般不会直接对内存的值进行读写比较操作，不论是调用系统的函数，还是赋值到变量，这样系统在输入和输出之前已经将这些处理好，所以不会产生这个问题。一旦涉及到使用指针直接操作内存，就要把这些点都考虑到，不然无法得到预期结果。</li>
+<p><code>void*</code>转化为其他指针需要强转，返过来其他指针转<code>void*</code>可以直接传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void*  xx</span><br><span class="line">int *p = (int*)pv1</span><br></pre></td></tr></table></figure>
+<p>常见指针类型转换的例子 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">char *buf = (char*)malloc(16);</span><br><span class="line">if(buf == NULL;)</span><br><span class="line">&#123; return -1;&#125;</span><br><span class="line">*(int *) buf = 123; // 实际上是对buf进行赋值，先把buf转化为int类型指针，指向的地址不变，对应的内存宽度从1个字节到4个字节，再解引用拿到值，然后赋值。</span><br><span class="line"></span><br><span class="line">printf(&quot;%d\n&quot;, *(int *)buf);</span><br><span class="line">free(buff);</span><br><span class="line">buf = NULL;</span><br></pre></td></tr></table></figure>
+<p>char *p 指针<br>char &amp;p 引用=别名   —和指针没啥关系<br>不要在函数内部返回局部变量的指针或者引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">摘自《啊哈！算法》：</span><br><span class="line">在C 语言中*号有三个用途，分别是：乘号，用做乘法运算，例如5*6。申明一个指针，在定义指针变量时使用，例如int *p;。间接运算符，取得指针所指向的内存中的值，例如printf(&quot;%d&quot;,*p);。</span><br></pre></td></tr></table></figure>
+<p>假设我们定义一个指针p。<br>那么会经常使用到三个符号：<br>1，p；<br>2，*p;<br>3，&p;<br>初学者经常会感到很迷茫，到底这三个符号表示什么？</p>
+<blockquote>
+<p>p是一个指针变量的名字，表示此指针变量指向的内存地址，如果使用%p来输出的话，它将是一个16进制数。</p>
+</blockquote>
+<blockquote>
+<p>*p表示此指针指向的内存地址中存放的内容，一般是一个和指针类型一致的变量或者常量。 而我们知道，&amp;是取地址运算符，&amp;p就是取指针p的地址。</p>
+<p>等会，怎么又来了个地址，它到底和p有什么区别？<br>区别：指针p同时也是个变量，既然是变量，编译器肯定要为其分配内存地址，就像程序中定义了一个int型的变量i，编译器要为其分配一块内存空间一样。</p>
+</blockquote>
+<blockquote>
+<p>&amp;p就表示编译器为变量p分配的内存地址，而因为p是一个指针变量，这种特殊的身份注定了它要指向另外一个内存地址，程序员按照程序的需要让它指向一个内存地址，这个它指向的内存地址就用p表示。而且，p指向的地址中的内容就用*p表示。</p>
+</blockquote>
+<h1 id="0x01-指针的运算"><a href="#0x01-指针的运算" class="headerlink" title="0x01 指针的运算"></a>0x01 指针的运算</h1><p>对于指针，只支持加减运算，加和减指针移动的长度取决于加减的值和指针的类型比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int a = 10;</span><br><span class="line">int *p = &amp;a;</span><br><span class="line">p + 1 //1个单位长度  这里是int就是4个字节</span><br><span class="line">// 那我们如果想就只移动1个字节怎么办？</span><br><span class="line">(char *)p + 1 //把p转化成char类型</span><br><span class="line">(unsigned long)p + 1 //把指针类型转化成一个数字类型比如long，数字+1就是+1再转回指针</span><br></pre></td></tr></table></figure>
+<p>在ANSI C标准中，不允许对void<em>指针进行算数运算和\</em>运算</p>
+<p>而在GNU（GCC）中允许，因为在缺省情况下，GNU认为void*与char*一样</p>
+<h1 id="0x02-常量指针与指针常量"><a href="#0x02-常量指针与指针常量" class="headerlink" title="0x02 常量指针与指针常量"></a>0x02 常量指针与指针常量</h1><p>常量指针是个指针，指针有了值就不能再改变<br>指针常量  指针不是常量，但指针指向的地址是常量</p>
+<p>区别技巧：把一个声明从右往左读。 把<em> 读成pointer to<br>char </em> const p<br>p is const pointer to char<br>p是一个常量指针指向char的 。那p就不能指向别的地址，但指向地址的值是可以改变的，也就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*p = &apos;x&apos;  //error</span><br><span class="line">p = &quot;helloworld&quot; // right</span><br></pre></td></tr></table></figure>
+<p>const char * p<br>p is a point to char const<br>p是一个指向char常量的指针。 那p可以指向别的地址，但是指向地址的值是不能改变的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*p = &apos;x&apos;  //right</span><br><span class="line">p = &quot;helloworld&quot; // error</span><br></pre></td></tr></table></figure>
+<p>const int * const p<br>两个都不能修改，都是常量。</p>
+<h1 id="0x03-数组？指针"><a href="#0x03-数组？指针" class="headerlink" title="0x03 数组？指针"></a>0x03 数组？指针</h1><h2 id="数组初始化与赋值"><a href="#数组初始化与赋值" class="headerlink" title="数组初始化与赋值"></a>数组初始化与赋值</h2><p>数组名是常量指针,保存在常量区，一旦定义，就不能修改：</p>
+<p><code>char a[100]; // char \*const a</code><br>数组只能在初始化的时候赋值，初始化结束后，就不能直接赋值了，必须拷贝或者对数组中的每个元素赋值。因为数组名是常量指针。</p>
+<p>中括号运算优先级高于*</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char a[100] = &quot;hello whorld&quot;; //正确</span><br><span class="line"></span><br><span class="line">a = &quot;hello world &quot;; //报错，这样等于在修改a地址，让a指向字符串所在位置。</span><br><span class="line">只能用拷贝的方法，比如</span><br><span class="line">memcpy(a,&quot;hello world&quot;, strlen(&quot;hello world&quot;)+1); </span><br><span class="line">或者循环对每个元素赋值</span><br></pre></td></tr></table></figure>
+<h2 id="数组首地址的注意事项"><a href="#数组首地址的注意事项" class="headerlink" title="数组首地址的注意事项"></a>数组首地址的注意事项</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">int a1[10];</span><br><span class="line">int a2[4][5];</span><br><span class="line">a1和&amp;a1的值相同，都是数组首地址</span><br><span class="line">//但是类型不同</span><br><span class="line">a1 是int * const p  (整型指针)</span><br><span class="line">&amp;a1 是int(*const a1)[10]  (10个元素的数组指针)</span><br><span class="line"></span><br><span class="line">//对于二维数组</span><br><span class="line">a2 是 int(*const a)[5]     (5个元素的数组指针)</span><br><span class="line">&amp;a2 是 int(*const a)[4][5]  (四行五列的二维数组指针)</span><br><span class="line"></span><br><span class="line">//简单来说就是 </span><br><span class="line">一维数组 a1代表一个元素  &amp;a1代表整个数组</span><br><span class="line">二维数组 a2代表的是一行 &amp;a2代表整个数组</span><br><span class="line"></span><br><span class="line">//类型不一样会导致指针指向的内存大小不同</span><br><span class="line">对于int *类型，占4字节，</span><br><span class="line">对于 int(*a)[10] 类型，占4*10=40个字节</span><br><span class="line"></span><br><span class="line">// 类型不同还会导致在指针运算的时候不同</span><br><span class="line">a1+1  说的是a1的地址向前移动a1这个指针类型的大小*1个字节</span><br><span class="line">所以&amp;a1 +1  地址就会加40个字节</span><br><span class="line"></span><br><span class="line">//由此也可以推断</span><br><span class="line">a[1] 是在a指向的这个地址 加上a的类型长度就，得到的地址就是a[1]</span><br><span class="line">a[-1] 就是a指向的这个地址，减去a类型长度，得到地址</span><br><span class="line"></span><br><span class="line">//同时还有一点</span><br><span class="line">a1是一个常量指针，指向的地址不能修改，只能改指针指向地址的值</span><br></pre></td></tr></table></figure>
+<h1 id="0x04函数指针和指针函数"><a href="#0x04函数指针和指针函数" class="headerlink" title="0x04函数指针和指针函数"></a>0x04函数指针和指针函数</h1><h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><p>函数指针： 指向函数的指针<br>如果一个指针变量，存放的是函数的地址，那么就把这个指针叫做函数指针。</p>
+<p>函数签名： 包含了函数的返回值类型，参数类型个数。</p>
+<p>函数指针的类型由对应函数的签名来决定</p>
+<p>定义函数指针的两种方法：</p>
+<ol>
+<li>首先用typedef定义出函数指针的类型，然后通过函数指针类型来定义函数指针</li>
+<li>直接用函数的签名来定义函数指针</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int print_int(int x)</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;hello word%d\n&quot;,x);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;  </span><br><span class="line">typedef int (*F)(int x );    //函数指针类型</span><br><span class="line">int mian(void)</span><br><span class="line">&#123;</span><br><span class="line">    int a = 100;</span><br><span class="line">    int (*f1)(int ) = print_int;  //f1</span><br><span class="line">    f1(a);</span><br><span class="line">    F f2 = print_int;</span><br><span class="line">    f2(a);</span><br><span class="line">    print_int(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数名就是一个函数指针</p>
+<h2 id="指针函数"><a href="#指针函数" class="headerlink" title="指针函数"></a>指针函数</h2><p>指针函数是返回值是指针的函数</p>
+<p>注意 不能返回局部变量的指针，因为局部变量的指针指向栈上，一旦返回，指向的内存就是一个被销毁了的内存空间，可能会出问题。<br>同样的也不能返回局部变量的引用。调用者拿到的也是一个尸体。</p>
+<h1 id="0x05-malloc-free和new-delete"><a href="#0x05-malloc-free和new-delete" class="headerlink" title="0x05 malloc/free和new/delete"></a>0x05 malloc/free和new/delete</h1><ul>
+<li>malloc与free是C++/C语言的标准库函数，new/delete是C++的运算符。它们都可用于申请动态内存和释放内存。</li>
+<li>对于非内部数据类型的对象而言，光用maloc/free无法满足动态对象的要求。对象在创建的同时要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于malloc/free是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于malloc/free。</li>
+<li>因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new，以及一个能完成清理与释放内存工作的运算符delete。注意new/delete不是库函数。</li>
+<li>我们不要企图用malloc/free来完成动态对象的内存管理，应该用new/delete。由于内部数据类型的“对象”没有构造与析构的过程，对它们而言malloc/free和new/delete是等价的。</li>
+<li>既然new/delete的功能完全覆盖了malloc/free，为什么C++不把malloc/free淘汰出局呢？这是因为C++程序经常要调用C函数，而C程序只能用malloc/free管理动态内存。</li>
+<li>如果用free释放“new创建的动态对象”，那么该对象因无法执行析构函数而可能导致程序出错。如果用delete释放“malloc申请的动态内存”，结果也会导致程序出错，但是该程序的可读性很差。所以new/delete必须配对使用，malloc/free也一样。</li>
 </ul>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ol>
+<li>中括号运算优先级高于*</li>
+</ol>
+<ul>
+<li>p和* 结合，p是一个指针</li>
+<li>p和[]结合，p是一个数组</li>
+<li>p和()结合，p是一个函数</li>
+</ul>
+<ol>
+<li>指针在声明的时候最好初始化，不初始化缺省值是随机的，会成为野指针</li>
+<li>当用malloc或者new申请内存时应判断是否分配成功，成功再赋值给指针</li>
+<li>如果指针指向动态分配的内存，那么在使用完后需要释放并且指向NULL，做到谁分配谁释放的原则，防止内存泄露</li>
+<li>如果要在函数内要改变传入的指针，需要传递指针的指针或者引用</li>
+<li>指针操作不要超过变量的作用范围，也就是不能返回局部变量的指针</li>
+</ol>
 
       
 
@@ -206,7 +258,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">pwn 计算机基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C语言</a>
         		</li>
       		
 		</ul>
@@ -218,7 +270,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/pwn//" class="article-tag-list-link color4">pwn</a>
+        			<a href="/categories/language//" class="article-tag-list-link color4">language</a>
         		</li>
       		
 		</ul>
@@ -273,7 +325,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://yps233.github.io/2019/0426-095605.html" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yps233.github.io/2020/0609-171644.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -287,15 +339,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/1030-175116.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Some C Code that I was write
-        
-      </div>
-    </a>
   
+    <a href="/2019/1030-175116.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Some C Code that I was write</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
